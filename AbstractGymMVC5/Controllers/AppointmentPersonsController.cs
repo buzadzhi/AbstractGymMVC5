@@ -108,7 +108,7 @@ namespace AbstractGymMVC5.Controllers
             }
 
             if (saveChangesError.GetValueOrDefault())
-            {
+            { 
                 ViewBag.ErrorMessage = "Cannot delete. Try again or contact the administrator.";
             }
 

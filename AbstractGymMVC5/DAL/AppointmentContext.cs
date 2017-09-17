@@ -16,10 +16,15 @@ namespace AbstractGymMVC5.DAL
         public DbSet<AppointmentPerson> AppointmentPersons { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            
+            modelBuilder.Entity<AppointmentPerson>().ToTable("AppointmentPerson");
+            modelBuilder.Entity<Room>().ToTable("Room");
+            modelBuilder.Entity<Appointment>().ToTable("Appointment");
+            modelBuilder.Entity<User>().ToTable("User");
         }
     }
 }

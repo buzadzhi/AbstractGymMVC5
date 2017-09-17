@@ -11,7 +11,7 @@ namespace AbstractGymMVC5.DAL
     {
         protected override void Seed(AppointmentContext context)
         {
-            var appointmentpersons = new List<AppointmentPerson>
+            var appointmentpersons = new AppointmentPerson[]
             {
                 new AppointmentPerson { FirstName="John", LastName="Smith"},
                 new AppointmentPerson { FirstName="Ann", LastName="Willson"},
@@ -20,10 +20,15 @@ namespace AbstractGymMVC5.DAL
                 new AppointmentPerson { FirstName="Dan", LastName="Black"}
             };
 
-            appointmentpersons.ForEach(s => context.AppointmentPersons.Add(s));
+            foreach(AppointmentPerson a in appointmentpersons)
+            {
+                context.AppointmentPersons.Add(a);
+            }
+            
             context.SaveChanges();
 
-            var rooms = new List<Room>
+
+            var rooms = new Room[]
             {
                 new Room { RoomName="B123"},
                 new Room { RoomName="G12"},
@@ -31,25 +36,63 @@ namespace AbstractGymMVC5.DAL
                 new Room { RoomName="1212"}
             };
 
-            rooms.ForEach(s => context.Rooms.Add(s));
+            foreach(Room r in rooms)
+            {
+                context.Rooms.Add(r);
+            }
+
+            context.SaveChanges();
+
+
+         
+
+            var users = new User[]
+            {
+                new User { FirstName="Mike", LastName="Taranti", email="taranti@gmail.com", Gender="m", DOB=DateTime.Parse("1991-11-11")},
+                new User { FirstName="Nil", LastName="Argento", email="argento@gmail.com", Gender="m", DOB=DateTime.Parse("1987-10-10")},
+                new User { FirstName="Michael", LastName="Basmati", email="basmati@gmail.com", Gender="m", DOB=DateTime.Parse("1977-09-09")},
+                new User { FirstName="Jessika", LastName="Alp", email="alp@gmail.com", Gender="f", DOB=DateTime.Parse("1967-08-08")},
+                new User { FirstName="Amanda", LastName="Wane", email="wane@gmail.com", Gender="f", DOB=DateTime.Parse("1955-07-07")}
+
+            };
+
+            foreach (User u in users)
+            {
+                context.Users.Add(u);
+            }
+
             context.SaveChanges();
 
 
             var appointments = new List<Appointment>
             {
-                new Appointment { AppointmentPersonID=1, RoomID=2, AppointmentDate=DateTime.Parse("2017-01-12"), AppointmentReason="bla" },
-                new Appointment { AppointmentPersonID=3, RoomID=1, AppointmentDate=DateTime.Parse("2017-01-01"), AppointmentReason="got sick"},
-                new Appointment { AppointmentPersonID=3, RoomID=3, AppointmentDate=DateTime.Parse("2017-12-07"), AppointmentReason="yoyo"},
-                new Appointment { AppointmentPersonID=1, RoomID=4, AppointmentDate=DateTime.Parse("2017-05-11"), AppointmentReason="bla"},
-                new Appointment { AppointmentPersonID=2, RoomID=2, AppointmentDate=DateTime.Parse("2017-08-01"), AppointmentReason="12313123"},
-                new Appointment { AppointmentPersonID=4, RoomID=1, AppointmentDate=DateTime.Parse("2017-11-01"), AppointmentReason="aloha"},
-                new Appointment { AppointmentPersonID=2, RoomID=3, AppointmentDate=DateTime.Parse("2017-01-06"), AppointmentReason="newnwnewnwe"},
-                new Appointment { AppointmentPersonID=5, RoomID=1, AppointmentDate=DateTime.Parse("2017-01-03"), AppointmentReason="lorem ipsum"},
+                new Appointment { AppointmentPersonID=appointmentpersons.Single( i => i.LastName == "Smith").ID, RoomID=rooms.Single( i => i.RoomName == "B123").ID, AppointmentDate=DateTime.Parse("2017-01-12"), AppointmentReason="bla", UserID=users.Single( i => i.LastName == "Taranti").ID },
+                new Appointment { AppointmentPersonID=appointmentpersons.Single( i => i.LastName == "Willson").ID, RoomID=rooms.Single( i => i.RoomName == "G12").ID, AppointmentDate=DateTime.Parse("2017-01-01"), AppointmentReason="got sick", UserID=users.Single( i => i.LastName == "Argento").ID},
+                new Appointment { AppointmentPersonID=appointmentpersons.Single( i => i.LastName == "Air").ID, RoomID=rooms.Single( i => i.RoomName == "B123").ID, AppointmentDate=DateTime.Parse("2017-12-07"), AppointmentReason="yoyo", UserID=users.Single( i => i.LastName == "Basmati").ID},
+                new Appointment { AppointmentPersonID=appointmentpersons.Single( i => i.LastName == "Stark").ID, RoomID=rooms.Single( i => i.RoomName == "L41").ID, AppointmentDate=DateTime.Parse("2017-05-11"), AppointmentReason="bla", UserID=users.Single( i => i.LastName == "Alp").ID},
+                new Appointment { AppointmentPersonID=appointmentpersons.Single( i => i.LastName == "Black").ID, RoomID=rooms.Single( i => i.RoomName == "1212").ID, AppointmentDate=DateTime.Parse("2017-08-01"), AppointmentReason="12313123", UserID=users.Single( i => i.LastName == "Wane").ID}
 
             };
 
-            appointments.ForEach(s => context.Appointments.Add(s));
+
+
+            foreach (Appointment ap in appointments)
+            {
+                var appointmentDataBase = context.Appointments.Where(
+                    a =>
+                        a.AppointmentPerson.ID == ap.AppointmentPersonID && a.User.ID == ap.UserID &&
+                        a.Room.ID == ap.RoomID).SingleOrDefault();
+                
+                if(appointmentDataBase == null)
+                {
+                    context.Appointments.Add(ap);
+                }
+            }
+
+
+        appointments.ForEach(s => context.Appointments.Add(s));
             context.SaveChanges();
+
         }
         
     }
