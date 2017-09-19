@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AbstractGymMVC5.Models.Appointment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Your Appointments";
 }
 
 <h2>Index</h2>
@@ -11,8 +11,9 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        <!--<th>
             @Html.DisplayNameFor(model => model.AppointmentPerson.FirstName)
+
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Room.RoomName)
@@ -26,32 +27,55 @@
         <th>
             @Html.DisplayNameFor(model => model.AppointmentReason)
         </th>
-        <th></th>
+
+        -->
+
+        <th>Appointment With</th>
+        <th>Room Number</th>
+        <th>Appointment Date</th>
+        <th>Appointment Reason</th>
+
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AppointmentPerson.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Room.RoomName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AppointmentDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AppointmentReason)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AppointmentID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AppointmentID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AppointmentID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.AppointmentPerson.FirstName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Room.RoomName)</td>
+            <td>@Html.DisplayFor(modelItem => item.AppointmentDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.AppointmentReason)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AppointmentID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AppointmentID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AppointmentID })
+            </td>
+        </tr>
+    }
+    <!--
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentPerson.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.RoomName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentReason)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.AppointmentID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.AppointmentID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.AppointmentID })
+            </td>
+        </tr>
+    }
+        -->
 
 </table>

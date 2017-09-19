@@ -26,5 +26,12 @@ namespace AbstractGymMVC5.Controllers
 
             return View();
         }
+
+        public ActionResult MyProfile()
+        {
+            ViewBag.Message = "This is your profile";
+
+            return View();
+        }
     }
 }
