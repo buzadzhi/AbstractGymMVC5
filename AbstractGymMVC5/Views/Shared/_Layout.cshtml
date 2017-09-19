@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -24,11 +27,14 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("MyProfile", "MyProfile", "Home")</li>
-                    <!--<li>@Html.ActionLink("Appointment with", "Index", "AppointmentPersons")</li>-->
-                    
-                    <!--<li>@Html.ActionLink("Rooms", "Index", "Room")</li>-->
-                </ul>
+                   
+                    @if (Request.IsAuthenticated) { 
+                        <li>@Html.ActionLink("MyProfile", "MyProfile", "Home")</li>
+
+                    }
+                        <!--<li>@Html.ActionLink("Appointment with", "Index", "AppointmentPersons")</li>-->
+                        <!--<li>@Html.ActionLink("Rooms", "Index", "Room")</li>-->
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
